@@ -30,7 +30,7 @@ A secure OTP (One-Time Password) verification system built with Flask, Twilio, a
 1. **Clone the repository**
    ```bash
    git clone <your-repo-url>
-   cd otp-verification
+   cd "OTP Verification with OpenSearch Logging"
    ```
 
 2. **Create a `.env` file** in the root directory:
@@ -41,11 +41,19 @@ A secure OTP (One-Time Password) verification system built with Flask, Twilio, a
    ```
 
 3. **Run with Docker Compose**
+
+   **starting**
    ```bash
+   docker-compose pull
    docker-compose up -d
    ```
 
-4. **Access the App**
+   **stopping**
+   ```bash
+   docker-compose down
+   ```
+
+5. **Access the App**
    * Flask App: `http://localhost:5000`  
    * OpenSearch Dashboard: `http://localhost:5601`
 
@@ -62,14 +70,18 @@ A secure OTP (One-Time Password) verification system built with Flask, Twilio, a
 
 ## Project Structure
 ```
-otp-verification/
+OTP Verification with OpenSearch Logging/
 ├── app.py                 # Flask application
 ├── templates/             # HTML templates
 │   └── index.html
+├── static/                # Static files (CSS, JS, images)
+│   └── style.css
+├── Dockerfile             # Dockerfile for Flask app
 ├── docker-compose.yml     # Docker Compose setup
 ├── .env                   # Environment variables (Twilio credentials)
 ├── README.md              # Project documentation
 └── requirements.txt       # Python dependencies
+
 ```
 
 ---
