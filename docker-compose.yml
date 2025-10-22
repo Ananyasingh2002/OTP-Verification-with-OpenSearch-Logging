@@ -1,0 +1,47 @@
+services:
+  opensearch:
+    image: opensearchproject/opensearch:2.15.0
+    container_name: opensearch_otp
+    environment:
+      - discovery.type=single-node
+      - DISABLE_SECURITY_PLUGIN=true
+      - OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m
+      - network.host=0.0.0.0
+    ports:
+      - "9200:9200"
+    networks:
+      - otpnet
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:9200 >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 50
+
+  opensearch-dashboards:
+    image: opensearchproject/opensearch-dashboards:2.15.0
+    container_name: opensearch_dashboards_otp
+    environment:
+      - DISABLE_SECURITY_DASHBOARDS_PLUGIN=true
+      - OPENSEARCH_HOSTS=http://opensearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      opensearch:
+        condition: service_healthy
+    networks:
+      - otpnet
+
+  otp-app:
+    build: .
+    container_name: otp_app
+    ports:
+      - "5000:5000"
+    depends_on:
+      opensearch:
+        condition: service_healthy
+    networks:
+      - otpnet
+
+networks:
+  otpnet:
+    driver: bridge

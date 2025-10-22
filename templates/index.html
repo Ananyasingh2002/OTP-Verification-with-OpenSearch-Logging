@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification Demo</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<script>
+    function sendPhoneNumber() {
+        let phoneNumber = $('#phone_number_field').val().trim();
+        if (!phoneNumber) {
+            alert("Enter a phone number!");
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/getOTP",
+            data: { "phone-number": phoneNumber },
+            contentType: "application/x-www-form-urlencoded",
+            xhrFields: { withCredentials: true },
+            success: function (data) {
+                if (data.status) {
+                    alert(data.status);
+                    $('#otp_code_field').show();
+                    $('#verify_btn').show();
+                } else {
+                    alert(data.error);
+                }
+            },
+            error: function () {
+                alert("Error sending OTP");
+            }
+        });
+    }
+
+    function verifyotp() {
+        let otpValue = $('#otp_code_field').val().trim();
+        if (!otpValue) {
+            alert("Enter the OTP sent to your phone.");
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/verifyOTP",
+            data: $.param({ "verification-code": otpValue }),
+            contentType: "application/x-www-form-urlencoded",
+            xhrFields: { withCredentials: true },
+            success: function (data) {
+                if (data.status === "success") {
+                    $('#verification-form').hide();
+                    $('#message').text("✅ OTP Verified Successfully!").show();
+                } else {
+                    alert(data.error);
+                }
+            },
+            error: function () {
+                alert("OTP is invalid, Please type the correct OTP");
+            }
+        });
+    }
+</script>
+
+<div class="main">
+    <div class="container">
+        <div id="verification-form">
+            <h1>OTP Verification Demo</h1>
+            <input type="text" id="phone_number_field" placeholder="Enter phone number (+countrycode...)" />
+            <button onclick="sendPhoneNumber()">Send OTP</button>
+            <br><br>
+            <input type="text" id="otp_code_field" name="verification-code" placeholder="Enter OTP" style="display:none;" />
+            <button id="verify_btn" onclick="verifyotp()" style="display:none;">Verify OTP</button>
+        </div>
+        <h1 id="message" style="display:none;"></h1>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+/* Reset & Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+/* Body Styling */
+body {
+    background: linear-gradient(135deg, #c8a2c8, #9b59b6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Main Container */
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* OTP Card */
+.container {
+    width: 400px;
+    background-color: #fff;
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 24px rgba(0,0,0,0.2);
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Heading */
+.container h1 {
+    font-size: 22px;
+    color: #5d3a5d;
+    margin-bottom: 20px;
+}
+
+/* Input Fields */
+.container input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1.5px solid #ccc;
+    outline: none;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.container input[type="text"]:focus {
+    border-color: #9b59b6;
+}
+
+/* Buttons */
+.container button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    background-color: #9b59b6;
+    color: white;
+    font-size: 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.container button:hover {
+    background-color: #8e44ad;
+}
+
+/* Success Message */
+#message {
+    font-size: 18px;
+    color: limegreen;
+    margin-top: 15px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
